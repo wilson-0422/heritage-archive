@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}我的预约 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>我的预约</h2>
+    <a href="{{ url_for('reservations.create') }}" class="btn btn-primary">新建预约</a>
+</div>
+
+<div class="table-responsive">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>展览名称</th>
+                <th>参观日期</th>
+                <th>参观人数</th>
+                <th>联系人</th>
+                <th>联系电话</th>
+                <th>备注</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td><a href="{{ url_for('exhibitions.detail', exhibition_id=reservation.exhibition_id) }}">{{ reservation.exhibition.title }}</a></td>
+                <td>{{ reservation.visit_date }}</td>
+                <td>{{ reservation.people_count }}人</td>
+                <td>{{ reservation.name }}</td>
+                <td>{{ reservation.phone }}</td>
+                <td>{{ reservation.note[:30] }}{% if reservation.note|length > 30 %}...{% endif %}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="empty-text">暂无预约记录</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

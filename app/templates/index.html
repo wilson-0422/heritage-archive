@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>非遗文化数字化档案系统</h1>
+    <p>传承非遗 守护匠心 | 数字化保护非物质文化遗产</p>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-number">{{ inheritor_count }}</div>
+        <div class="stat-label">传承人</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ collection_count }}</div>
+        <div class="stat-label">藏品</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ exhibition_count }}</div>
+        <div class="stat-label">展览</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ reservation_count }}</div>
+        <div class="stat-label">预约</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>近期展览</h2>
+    <div class="card-grid">
+        {% for exhibition in recent_exhibitions %}
+        <div class="card">
+            <div class="card-body">
+                <h3><a href="{{ url_for('exhibitions.detail', exhibition_id=exhibition.id) }}">{{ exhibition.title }}</a></h3>
+                <p class="card-meta">{{ exhibition.location }}</p>
+                <p class="card-meta">{{ exhibition.start_date }} ~ {{ exhibition.end_date }}</p>
+                <span class="badge badge-{{ 'success' if exhibition.status == '进行中' else ('warning' if exhibition.status == '未开始' else 'secondary') }}">{{ exhibition.status }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="section">
+    <h2>最新藏品</h2>
+    <div class="card-grid">
+        {% for collection in recent_collections %}
+        <div class="card">
+            <div class="card-body">
+                <h3><a href="{{ url_for('collections.detail', collection_id=collection.id) }}">{{ collection.name }}</a></h3>
+                <p class="card-meta">{{ collection.category }} | {{ collection.year }}年</p>
+                <p class="card-meta">传承人：{{ collection.inheritor.name }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

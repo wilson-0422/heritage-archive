@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}研学预约 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>研学预约</h2>
+    <form method="POST" action="{{ url_for('reservations.create') }}">
+        <div class="form-group">
+            <label for="exhibition_id">选择展览</label>
+            <select id="exhibition_id" name="exhibition_id" required>
+                <option value="">请选择展览</option>
+                {% for exhibition in exhibitions %}
+                <option value="{{ exhibition.id }}" {% if exhibition.id == pre_exhibition_id %}selected{% endif %}>{{ exhibition.title }}（{{ exhibition.location }}）</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">联系人姓名</label>
+            <input type="text" id="name" name="name" required placeholder="请输入联系人姓名">
+        </div>
+        <div class="form-group">
+            <label for="phone">联系电话</label>
+            <input type="text" id="phone" name="phone" required placeholder="请输入联系电话">
+        </div>
+        <div class="form-group">
+            <label for="people_count">参观人数</label>
+            <input type="number" id="people_count" name="people_count" min="1" value="1" required>
+        </div>
+        <div class="form-group">
+            <label for="visit_date">参观日期</label>
+            <input type="date" id="visit_date" name="visit_date" required>
+        </div>
+        <div class="form-group">
+            <label for="note">备注</label>
+            <textarea id="note" name="note" rows="3" placeholder="如有特殊需求请在此说明"></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交预约</button>
+            <a href="{{ url_for('reservations.list_reservations') }}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

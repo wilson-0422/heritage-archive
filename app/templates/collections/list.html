@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}藏品展馆 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>藏品线上展馆</h2>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('collections.create') }}" class="btn btn-primary">添加藏品</a>
+    {% endif %}
+</div>
+
+<div class="filter-bar">
+    <form method="GET" action="{{ url_for('collections.list_collections') }}" class="filter-form">
+        <select name="category" class="form-control">
+            <option value="">全部类别</option>
+            {% for cat in categories %}
+            <option value="{{ cat }}" {% if cat == current_category %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary">筛选</button>
+    </form>
+</div>
+
+<div class="card-grid">
+    {% for collection in collections %}
+    <div class="card collection-card">
+        <div class="card-body">
+            <h3><a href="{{ url_for('collections.detail', collection_id=collection.id) }}">{{ collection.name }}</a></h3>
+            <p class="card-meta">
+                <span class="badge">{{ collection.category }}</span>
+                <span>{{ collection.year }}年</span>
+            </p>
+            <p class="card-desc">{{ collection.description[:80] }}{% if collection.description|length > 80 %}...{% endif %}</p>
+            <p class="card-meta">传承人：{{ collection.inheritor.name }}</p>
+        </div>
+    </div>
+    {% else %}
+    <p class="empty-text">暂无藏品数据</p>
+    {% endfor %}
+</div>
+{% endblock %}

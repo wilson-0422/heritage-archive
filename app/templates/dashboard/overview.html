@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}数据看板 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>数据看板</h2>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-number">{{ inheritor_count }}</div>
+        <div class="stat-label">传承人总数</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ collection_count }}</div>
+        <div class="stat-label">藏品总数</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ exhibition_count }}</div>
+        <div class="stat-label">展览总数</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ reservation_count }}</div>
+        <div class="stat-label">预约总数</div>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card stat-highlight">
+        <div class="stat-number">{{ active_exhibitions }}</div>
+        <div class="stat-label">进行中展览</div>
+    </div>
+    <div class="stat-card stat-warning">
+        <div class="stat-number">{{ pending_exhibitions }}</div>
+        <div class="stat-label">未开始展览</div>
+    </div>
+</div>
+
+<div class="section">
+    <h3>快捷操作</h3>
+    <div class="action-grid">
+        <a href="{{ url_for('inheritors.create') }}" class="action-card">添加传承人</a>
+        <a href="{{ url_for('collections.create') }}" class="action-card">添加藏品</a>
+        <a href="{{ url_for('crafts.create') }}" class="action-card">添加工艺步骤</a>
+        <a href="{{ url_for('exhibitions.create') }}" class="action-card">创建展览</a>
+        <a href="{{ url_for('reservations.create') }}" class="action-card">新建预约</a>
+        <a href="{{ url_for('inheritors.list_inheritors') }}" class="action-card">浏览传承人</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ craft.title }} - 工艺步骤详情 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="detail-page">
+    <div class="page-header">
+        <h2>{{ craft.title }}</h2>
+        <a href="{{ url_for('crafts.list_crafts', collection_id=craft.collection_id) }}" class="btn btn-secondary">返回列表</a>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">所属藏品</span>
+                <span class="detail-value"><a href="{{ url_for('collections.detail', collection_id=craft.collection_id) }}">{{ craft.collection.name }}</a></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">步骤序号</span>
+                <span class="detail-value">第 {{ craft.step_number }} 步</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">耗时</span>
+                <span class="detail-value">{{ craft.duration }}</span>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h3>步骤说明</h3>
+            <p>{{ craft.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

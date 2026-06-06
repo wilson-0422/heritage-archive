@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}传承人列表 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>非遗传承人</h2>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('inheritors.create') }}" class="btn btn-primary">添加传承人</a>
+    {% endif %}
+</div>
+
+<div class="filter-bar">
+    <form method="GET" action="{{ url_for('inheritors.list_inheritors') }}" class="filter-form">
+        <select name="category" class="form-control">
+            <option value="">全部类别</option>
+            {% for cat in categories %}
+            <option value="{{ cat }}" {% if cat == current_category %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="keyword" value="{{ keyword }}" placeholder="搜索姓名/项目/城市" class="form-control">
+        <button type="submit" class="btn btn-secondary">筛选</button>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>出生年份</th>
+                <th>类别</th>
+                <th>传承项目</th>
+                <th>地区</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inheritor in inheritors %}
+            <tr>
+                <td><a href="{{ url_for('inheritors.detail', inheritor_id=inheritor.id) }}">{{ inheritor.name }}</a></td>
+                <td>{{ inheritor.gender }}</td>
+                <td>{{ inheritor.birth_year }}</td>
+                <td>{{ inheritor.category }}</td>
+                <td>{{ inheritor.heritage_item }}</td>
+                <td>{{ inheritor.province }}{{ inheritor.city }}</td>
+                <td>
+                    <a href="{{ url_for('inheritors.detail', inheritor_id=inheritor.id) }}" class="btn btn-sm">查看</a>
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('inheritors.edit', inheritor_id=inheritor.id) }}" class="btn btn-sm btn-secondary">编辑</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="empty-text">暂无传承人数据</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}工艺步骤 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>工艺步骤</h2>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('crafts.create') }}" class="btn btn-primary">添加步骤</a>
+    {% endif %}
+</div>
+
+{% if collection %}
+<div class="filter-info">
+    <span>当前筛选：{{ collection.name }}</span>
+    <a href="{{ url_for('crafts.list_crafts') }}" class="btn btn-sm btn-secondary">查看全部</a>
+</div>
+{% endif %}
+
+<div class="table-responsive">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>藏品</th>
+                <th>步骤</th>
+                <th>标题</th>
+                <th>描述</th>
+                <th>耗时</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for craft in crafts %}
+            <tr>
+                <td><a href="{{ url_for('collections.detail', collection_id=craft.collection_id) }}">{{ craft.collection.name }}</a></td>
+                <td>{{ craft.step_number }}</td>
+                <td>{{ craft.title }}</td>
+                <td>{{ craft.description[:50] }}{% if craft.description|length > 50 %}...{% endif %}</td>
+                <td>{{ craft.duration }}</td>
+                <td><a href="{{ url_for('crafts.detail', craft_id=craft.id) }}" class="btn btn-sm">查看</a></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="empty-text">暂无工艺步骤数据</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}添加工艺步骤 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>添加工艺步骤</h2>
+    <form method="POST" action="{{ url_for('crafts.create') }}">
+        <div class="form-group">
+            <label for="collection_id">所属藏品</label>
+            <select id="collection_id" name="collection_id" required>
+                <option value="">请选择藏品</option>
+                {% for collection in collections %}
+                <option value="{{ collection.id }}" {% if collection.id == pre_collection_id %}selected{% endif %}>{{ collection.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="step_number">步骤序号</label>
+            <input type="number" id="step_number" name="step_number" min="1" required placeholder="如：1">
+        </div>
+        <div class="form-group">
+            <label for="title">步骤标题</label>
+            <input type="text" id="title" name="title" required placeholder="如：选稿与描图">
+        </div>
+        <div class="form-group">
+            <label for="description">步骤说明</label>
+            <textarea id="description" name="description" rows="5" placeholder="请详细描述该步骤的操作内容"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="duration">耗时</label>
+            <input type="text" id="duration" name="duration" placeholder="如：2天">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <a href="{{ url_for('crafts.list_crafts') }}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

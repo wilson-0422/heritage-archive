@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ exhibition.title }} - 展览详情 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="detail-page">
+    <div class="page-header">
+        <h2>{{ exhibition.title }}</h2>
+        <a href="{{ url_for('exhibitions.list_exhibitions') }}" class="btn btn-secondary">返回列表</a>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">展览地点</span>
+                <span class="detail-value">{{ exhibition.location }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">展览时间</span>
+                <span class="detail-value">{{ exhibition.start_date }} ~ {{ exhibition.end_date }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">展览状态</span>
+                <span class="detail-value">
+                    <span class="badge badge-{{ 'success' if exhibition.status == '进行中' else ('warning' if exhibition.status == '未开始' else 'secondary') }}">{{ exhibition.status }}</span>
+                </span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">容量</span>
+                <span class="detail-value">{{ exhibition.capacity }}人（已预约{{ reservation_count }}人）</span>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h3>展览简介</h3>
+            <p>{{ exhibition.description }}</p>
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated and exhibition.status == '进行中' %}
+    <div class="section">
+        <a href="{{ url_for('reservations.create', exhibition_id=exhibition.id) }}" class="btn btn-primary">预约参观</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

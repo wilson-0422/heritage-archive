@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}添加藏品 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>添加藏品</h2>
+    <form method="POST" action="{{ url_for('collections.create') }}">
+        <div class="form-group">
+            <label for="name">藏品名称</label>
+            <input type="text" id="name" name="name" required placeholder="请输入藏品名称">
+        </div>
+        <div class="form-group">
+            <label for="category">类别</label>
+            <input type="text" id="category" name="category" required placeholder="如：刺绣、陶瓷、剪纸">
+        </div>
+        <div class="form-group">
+            <label for="inheritor_id">传承人</label>
+            <select id="inheritor_id" name="inheritor_id" required>
+                <option value="">请选择传承人</option>
+                {% for inheritor in inheritors %}
+                <option value="{{ inheritor.id }}">{{ inheritor.name }} - {{ inheritor.heritage_item }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="year">年代</label>
+            <input type="number" id="year" name="year" placeholder="如：2020">
+        </div>
+        <div class="form-group">
+            <label for="material">材质</label>
+            <input type="text" id="material" name="material" placeholder="如：丝线、绢布">
+        </div>
+        <div class="form-group">
+            <label for="size">尺寸</label>
+            <input type="text" id="size" name="size" placeholder="如：45cm×45cm">
+        </div>
+        <div class="form-group">
+            <label for="description">描述</label>
+            <textarea id="description" name="description" rows="5" placeholder="请输入藏品描述"></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <a href="{{ url_for('collections.list_collections') }}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

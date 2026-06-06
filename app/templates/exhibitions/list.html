@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}线下展演 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>线下展演</h2>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('exhibitions.create') }}" class="btn btn-primary">创建展览</a>
+    {% endif %}
+</div>
+
+<div class="filter-bar">
+    <form method="GET" action="{{ url_for('exhibitions.list_exhibitions') }}" class="filter-form">
+        <select name="status" class="form-control">
+            <option value="">全部状态</option>
+            <option value="未开始" {% if current_status == '未开始' %}selected{% endif %}>未开始</option>
+            <option value="进行中" {% if current_status == '进行中' %}selected{% endif %}>进行中</option>
+            <option value="已结束" {% if current_status == '已结束' %}selected{% endif %}>已结束</option>
+        </select>
+        <button type="submit" class="btn btn-secondary">筛选</button>
+    </form>
+</div>
+
+<div class="card-grid">
+    {% for exhibition in exhibitions %}
+    <div class="card exhibition-card">
+        <div class="card-body">
+            <h3><a href="{{ url_for('exhibitions.detail', exhibition_id=exhibition.id) }}">{{ exhibition.title }}</a></h3>
+            <p class="card-meta">{{ exhibition.location }}</p>
+            <p class="card-meta">{{ exhibition.start_date }} ~ {{ exhibition.end_date }}</p>
+            <p class="card-desc">{{ exhibition.description[:80] }}{% if exhibition.description|length > 80 %}...{% endif %}</p>
+            <span class="badge badge-{{ 'success' if exhibition.status == '进行中' else ('warning' if exhibition.status == '未开始' else 'secondary') }}">{{ exhibition.status }}</span>
+        </div>
+    </div>
+    {% else %}
+    <p class="empty-text">暂无展览数据</p>
+    {% endfor %}
+</div>
+{% endblock %}

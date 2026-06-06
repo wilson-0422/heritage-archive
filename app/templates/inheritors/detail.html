@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ inheritor.name }} - 传承人详情 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="detail-page">
+    <div class="page-header">
+        <h2>{{ inheritor.name }}</h2>
+        <a href="{{ url_for('inheritors.list_inheritors') }}" class="btn btn-secondary">返回列表</a>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">性别</span>
+                <span class="detail-value">{{ inheritor.gender }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">出生年份</span>
+                <span class="detail-value">{{ inheritor.birth_year }}年</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">非遗类别</span>
+                <span class="detail-value">{{ inheritor.category }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">传承项目</span>
+                <span class="detail-value">{{ inheritor.heritage_item }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">所在地区</span>
+                <span class="detail-value">{{ inheritor.province }}{{ inheritor.city }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">联系电话</span>
+                <span class="detail-value">{{ inheritor.phone }}</span>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h3>个人简介</h3>
+            <p>{{ inheritor.description }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>相关藏品</h3>
+        <div class="card-grid">
+            {% for collection in inheritor.collections %}
+            <div class="card">
+                <div class="card-body">
+                    <h4><a href="{{ url_for('collections.detail', collection_id=collection.id) }}">{{ collection.name }}</a></h4>
+                    <p class="card-meta">{{ collection.category }} | {{ collection.year }}年</p>
+                </div>
+            </div>
+            {% else %}
+            <p class="empty-text">暂无相关藏品</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

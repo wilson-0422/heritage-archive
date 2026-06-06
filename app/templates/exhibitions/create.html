@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}创建展览 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>创建展览</h2>
+    <form method="POST" action="{{ url_for('exhibitions.create') }}">
+        <div class="form-group">
+            <label for="title">展览名称</label>
+            <input type="text" id="title" name="title" required placeholder="请输入展览名称">
+        </div>
+        <div class="form-group">
+            <label for="location">展览地点</label>
+            <input type="text" id="location" name="location" required placeholder="请输入展览地点">
+        </div>
+        <div class="form-group">
+            <label for="start_date">开始日期</label>
+            <input type="date" id="start_date" name="start_date" required>
+        </div>
+        <div class="form-group">
+            <label for="end_date">结束日期</label>
+            <input type="date" id="end_date" name="end_date" required>
+        </div>
+        <div class="form-group">
+            <label for="status">状态</label>
+            <select id="status" name="status">
+                <option value="未开始">未开始</option>
+                <option value="进行中">进行中</option>
+                <option value="已结束">已结束</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="capacity">容量（人）</label>
+            <input type="number" id="capacity" name="capacity" min="1" value="100" required>
+        </div>
+        <div class="form-group">
+            <label for="description">展览简介</label>
+            <textarea id="description" name="description" rows="5" placeholder="请输入展览简介"></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">创建</button>
+            <a href="{{ url_for('exhibitions.list_exhibitions') }}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

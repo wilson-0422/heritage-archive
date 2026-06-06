@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ collection.name }} - 藏品详情 - 非遗文化数字化档案系统{% endblock %}
+
+{% block content %}
+<div class="detail-page">
+    <div class="page-header">
+        <h2>{{ collection.name }}</h2>
+        <a href="{{ url_for('collections.list_collections') }}" class="btn btn-secondary">返回展馆</a>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">类别</span>
+                <span class="detail-value">{{ collection.category }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">年代</span>
+                <span class="detail-value">{{ collection.year }}年</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">材质</span>
+                <span class="detail-value">{{ collection.material }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">尺寸</span>
+                <span class="detail-value">{{ collection.size }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">传承人</span>
+                <span class="detail-value"><a href="{{ url_for('inheritors.detail', inheritor_id=collection.inheritor.id) }}">{{ collection.inheritor.name }}</a></span>
+            </div>
+        </div>
+        <div class="detail-section">
+            <h3>藏品描述</h3>
+            <p>{{ collection.description }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="page-header">
+            <h3>工艺步骤</h3>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('crafts.create', collection_id=collection.id) }}" class="btn btn-sm btn-primary">添加步骤</a>
+            {% endif %}
+        </div>
+        {% if collection.craft_steps.count() > 0 %}
+        <div class="steps-list">
+            {% for step in collection.craft_steps %}
+            <div class="step-item">
+                <div class="step-number">步骤 {{ step.step_number }}</div>
+                <div class="step-content">
+                    <h4>{{ step.title }}</h4>
+                    <p>{{ step.description }}</p>
+                    <span class="step-duration">耗时：{{ step.duration }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-text">暂无工艺步骤记录</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

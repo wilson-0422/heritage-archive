@@ -1,0 +1,8 @@
+"prompt_index","prompt","model_name","difficulty","category","tech_stack","module_tags"
+"1","在 app/models/inheritor.py 中新增一个 level 字段表示传承人等级（国家级/省级/市级/县级），并修改 app/routes/inheritors.py 的列表视图支持按等级筛选，同时更新 inheritors/list.html 模板添加筛选表单","GLM-5.1","困难","代码生成","Python,Flask,SQLAlchemy,SQLite","models;routes;templates"
+"2","app/services/collection_service.py 的 get_collections 方法在按类别过滤时返回空结果，排查 SQLAlchemy 查询逻辑中的 bug 并修复，确保 app/routes/collections.py 中按类别筛选功能正常工作","Qwen3.6-Plus","困难","Bug 修复 / 调试","Python,Flask,SQLAlchemy,SQLite","services;routes"
+"3","重构 app/models/exhibition.py 和 app/services/exhibition_service.py，将展览状态从字符串常量改为枚举类型，并在 app/routes/exhibitions.py 中使用枚举值替代硬编码字符串，确保所有模板兼容","MinMax-M2.7","困难","代码重构","Python,Flask,SQLAlchemy,SQLite","models;services;routes"
+"4","在 app/routes/reservations.py 和 app/services/reservation_service.py 中增加研学预约人数上限校验逻辑，当预约人数超过展览容量时拒绝预约并返回友好提示，同时更新 reservations/create.html 展示剩余名额","GLM-5.1","困难","功能迭代","Python,Flask,SQLAlchemy,SQLite","routes;services;templates"
+"5","为 app/services/craft_service.py 中的 get_craft_steps_by_collection 和 create_craft_step 方法编写单元测试，使用 pytest 和 Flask 测试客户端，覆盖正常流程和边界情况","Qwen3.6-Plus","困难","测试","Python,Flask,SQLAlchemy,SQLite","services;tests"
+"6","在 repo/ 目录下添加 Docker Compose 配置文件和 Makefile，实现一键启动（含数据库初始化和种子数据导入），并更新 README.md 中的部署文档","MinMax-M2.7","困难","DevOps / 工程化","Python,Flask,SQLAlchemy,SQLite","devops;docker"
+"7","在 app/routes/inheritors.py 中新增 REST API 端点返回 JSON 格式的传承人数据，并在 app/services/inheritor_service.py 中添加分页和搜索功能，同时修改 app/models/inheritor.py 支持全文搜索字段","GLM-5.1","困难","代码生成","Python,Flask,SQLAlchemy,SQLite","routes;services;models"
